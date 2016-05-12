@@ -1,9 +1,9 @@
-var KING = 1;
-var QUEEN = 2;
-var BISHOP = 3;
-var KNIGHT = 4;
-var ROOK = 5;
-var PAWN = 6;
+var KING 	= 1;
+var QUEEN 	= 2;
+var BISHOP 	= 3;
+var KNIGHT 	= 4;
+var ROOK 	= 5;
+var PAWN 	= 6;
 
 var WHITE = 100;
 var BLACK = 101;
@@ -29,11 +29,11 @@ function init_state() {
 	state[1][0] = new Piece(PAWN, 	WHITE);
 	state[1][1] = new Piece(PAWN, 	WHITE);
 	state[1][2] = new Piece(PAWN, 	WHITE);
-	// state[1][3] = new Piece(PAWN, 	WHITE);
-	// state[1][4] = new Piece(PAWN, 	WHITE);
-	// state[1][5] = new Piece(PAWN, 	WHITE);
-	// state[1][6] = new Piece(PAWN, 	WHITE);
-	// state[1][7] = new Piece(PAWN, 	WHITE);
+	state[1][3] = new Piece(PAWN, 	WHITE);
+	state[1][4] = new Piece(PAWN, 	WHITE);
+	state[1][5] = new Piece(PAWN, 	WHITE);
+	state[1][6] = new Piece(PAWN, 	WHITE);
+	state[1][7] = new Piece(PAWN, 	WHITE);
 
 	state[6][0] = new Piece(PAWN, 	BLACK);
 	state[6][1] = new Piece(PAWN, 	BLACK);

@@ -42,32 +42,38 @@ function drawPieces(state) {
 }
 drawPieces(board_state);
 
-var future_states = getLegalMoves(board_state, WHITE);
-var state_divs = [];
+var current_player = WHITE;
+function populateFutureStates() {
+	var future_states = getLegalMoves(board_state, current_player);
+	var state_divs = [];
+	$("#state_list").empty();
 
-var $div = $("<div>", {	text : "Initial",
-						class : "alt_state"});
-$div.click(function() {
-	drawBoard();
-	drawPieces(board_state);
-	for(var i = 0; i < state_divs.length; i++)
-		$(state_divs[i]).removeClass("selected");
-	$(this).addClass("selected");
-});
-$("#state_list").append($div);
-state_divs.push($div);
-
-for(var i = 0; i < future_states.length; i++) {
-	var $div = $("<div>", {	id : i,
-							text : "State " + i,
+	var $div = $("<div>", {	text : "Initial",
 							class : "alt_state"});
-	$div.click(function() {
+	$div.hover(function() {
 		drawBoard();
-		drawPieces(future_states[this.id]);
-		for(var i = 0; i < state_divs.length; i++)
-			$(state_divs[i]).removeClass("selected");
-		$(this).addClass("selected");
+		drawPieces(board_state);
 	});
 	$("#state_list").append($div);
 	state_divs.push($div);
+
+	for(var i = 0; i < future_states.length; i++) {
+		var $div = $("<div>", {	id : i,
+								text : "State " + i,
+								class : "alt_state"});
+		$div.hover(function() {
+			drawBoard();
+			drawPieces(future_states[this.id]);
+		});
+		$div.click(function() {
+			board_state = future_states[this.id];
+			drawBoard();
+			drawPieces(board_state);
+			populateFutureStates();
+		});
+		$("#state_list").append($div);
+		state_divs.push($div);
+	}
+	current_player = current_player == WHITE ? BLACK : WHITE;
 }
+populateFutureStates();
