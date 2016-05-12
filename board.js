@@ -21,24 +21,35 @@ drawBoard();
 
 var board_state = init_state();
 
-function drawPieces() {
+function drawPieces(state) {
 	var width = canvas.width;
 	var height = canvas.height;
 	var square_size = parseInt(width < height ? width / 8 : height / 8);
 	var center_size = parseInt(square_size / 2);
 	for(var i = 0; i < 8; i++) {
 		for(var j = 0; j < 8; j++) {
-			if(board_state[i][j] !== undefined) {
-				ctx.fillStyle = board_state[i][j].player == WHITE ? white_color : black_color;
+			if(state[i][j] !== undefined) {
+				ctx.fillStyle = state[i][j].player == WHITE ? white_color : black_color;
 				ctx.beginPath();
 				ctx.arc(j * square_size + center_size, i * square_size + center_size, center_size - 5, 0, 2 * Math.PI);
 				ctx.fill();
-				ctx.fillStyle = board_state[i][j].player == WHITE ? black_color : white_color;
-				ctx.fillText(board_state[i][j].rank, j * square_size + center_size, i * square_size + center_size);
+				ctx.fillStyle = state[i][j].player == WHITE ? black_color : white_color;
+				ctx.fillText(state[i][j].rank, j * square_size + center_size, i * square_size + center_size);
 			}
 		}
 	}
 }
-drawPieces();
+drawPieces(board_state);
 
-console.log(getLegalMoves(board_state, WHITE));
+var future_states = getLegalMoves(board_state, BLACK);
+
+for(var i = 0; i < future_states.length; i++) {
+	var $div = $("<div>", {	id : i,
+							text : "State " + i,
+							class : "alt_state"});
+	$div.click(function() {
+		drawBoard();
+		drawPieces(future_states[this.id]);
+	});
+	$("#state_list").append($div);
+}

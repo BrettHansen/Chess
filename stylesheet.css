@@ -2,3 +2,12 @@ canvas {
 	display: block;
 	margin: auto;
 }
+
+#state_list {
+	position: absolute;
+	top: 0px;
+}
+
+.alt_state {
+	cursor: pointer;
+}
