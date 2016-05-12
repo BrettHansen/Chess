@@ -54,3 +54,17 @@ function init_state() {
 
 	return state;
 }
+
+/**
+ * Return a deep copy of a game state.
+ */
+function clone_state(source_state) {
+	var clone = [];
+	for(var i = 0; i < 8; i++) {
+		clone[i] = [];
+		for(var j = 0; j < 8; j++)
+			if(source_state[i][j] !== undefined)
+				clone[i][j] = new Piece(source_state[i][j].rank, source_state[i][j].player);
+	}
+	return clone;
+}

@@ -40,3 +40,5 @@ function drawPieces() {
 	}
 }
 drawPieces();
+
+console.log(getLegalMoves(board_state, WHITE));
