@@ -34,14 +34,28 @@ function drawPieces(state) {
 				ctx.arc(j * square_size + center_size, i * square_size + center_size, center_size - 5, 0, 2 * Math.PI);
 				ctx.fill();
 				ctx.fillStyle = state[i][j].player == WHITE ? black_color : white_color;
-				ctx.fillText(state[i][j].rank, j * square_size + center_size, i * square_size + center_size);
+				ctx.font = "30px Helvetica";
+				ctx.fillText(state[i][j].rank, j * square_size + center_size - 8, i * square_size + center_size + 8);
 			}
 		}
 	}
 }
 drawPieces(board_state);
 
-var future_states = getLegalMoves(board_state, BLACK);
+var future_states = getLegalMoves(board_state, WHITE);
+var state_divs = [];
+
+var $div = $("<div>", {	text : "Initial",
+						class : "alt_state"});
+$div.click(function() {
+	drawBoard();
+	drawPieces(board_state);
+	for(var i = 0; i < state_divs.length; i++)
+		$(state_divs[i]).removeClass("selected");
+	$(this).addClass("selected");
+});
+$("#state_list").append($div);
+state_divs.push($div);
 
 for(var i = 0; i < future_states.length; i++) {
 	var $div = $("<div>", {	id : i,
@@ -50,6 +64,10 @@ for(var i = 0; i < future_states.length; i++) {
 	$div.click(function() {
 		drawBoard();
 		drawPieces(future_states[this.id]);
+		for(var i = 0; i < state_divs.length; i++)
+			$(state_divs[i]).removeClass("selected");
+		$(this).addClass("selected");
 	});
 	$("#state_list").append($div);
+	state_divs.push($div);
 }
