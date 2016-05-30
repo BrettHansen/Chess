@@ -11,6 +11,8 @@ var BLACK = 101;
 function Piece(rank, player) {
 	this.rank = rank;
 	this.player = player;
+	if(this.rank == ROOK)
+		this.can_castle = true;
 }
 
 function init_state() {
@@ -63,8 +65,10 @@ function clone_state(source_state) {
 	for(var i = 0; i < 8; i++) {
 		clone[i] = [];
 		for(var j = 0; j < 8; j++)
-			if(source_state[i][j] !== undefined)
+			if(source_state[i][j] !== undefined) {
 				clone[i][j] = new Piece(source_state[i][j].rank, source_state[i][j].player);
+				clone[i][j].can_castle = source_state[i][j].can_castle;
+			}
 	}
 	return clone;
 }
